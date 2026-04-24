@@ -6,9 +6,10 @@ import LeadsTab from '@/components/tabs/LeadsTab';
 import SEOTab from '@/components/tabs/SEOTab';
 import OutreachTab from '@/components/tabs/OutreachTab';
 import ContentTab from '@/components/tabs/ContentTab';
+import AdsTab from '@/components/tabs/AdsTab';
 import { fetchFileContent, fetchDirectory, fetchFileContentByUrl } from '@/lib/github';
 
-type Tab = 'leads' | 'seo' | 'outreach' | 'content';
+type Tab = 'leads' | 'seo' | 'outreach' | 'content' | 'ads';
 
 interface Stats {
   leads: number;
@@ -87,6 +88,7 @@ export default function DashboardPage() {
     { id: 'seo', label: 'SEO Pages' },
     { id: 'outreach', label: 'Outreach' },
     { id: 'content', label: 'Content Calendar' },
+    { id: 'ads', label: 'Ad Generator' },
   ];
 
   const statCards = [
@@ -188,6 +190,7 @@ export default function DashboardPage() {
         {activeTab === 'seo' && <SEOTab />}
         {activeTab === 'outreach' && <OutreachTab />}
         {activeTab === 'content' && <ContentTab />}
+        {activeTab === 'ads' && <AdsTab />}
       </div>
     </div>
   );
