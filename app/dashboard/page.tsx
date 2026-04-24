@@ -8,6 +8,7 @@ import OutreachTab from '@/components/tabs/OutreachTab';
 import ContentTab from '@/components/tabs/ContentTab';
 import AdsTab from '@/components/tabs/AdsTab';
 import { fetchFileContent, fetchDirectory, fetchFileContentByUrl } from '@/lib/github';
+import WelcomeModal from '@/components/WelcomeModal';
 
 type Tab = 'leads' | 'seo' | 'outreach' | 'content' | 'ads';
 
@@ -21,6 +22,7 @@ interface Stats {
 export default function DashboardPage() {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('leads');
   const [stats, setStats] = useState<Stats>({ leads: 0, seoPages: 0, outreachFiles: 0, contentPosts: 0 });
   const [statsLoading, setStatsLoading] = useState(true);
@@ -32,6 +34,10 @@ export default function DashboardPage() {
         router.replace('/login');
       } else {
         setChecked(true);
+        const welcomed = localStorage.getItem('sf_welcome_seen');
+        if (!welcomed) {
+          setShowWelcome(true);
+        }
       }
     }
   }, [router]);
@@ -68,6 +74,13 @@ export default function DashboardPage() {
     if (checked) loadStats();
   }, [checked, loadStats]);
 
+  function handleDismissWelcome() {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sf_welcome_seen', 'true');
+    }
+    setShowWelcome(false);
+  }
+
   function handleLogout() {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('sf_auth');
@@ -100,6 +113,7 @@ export default function DashboardPage() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', color: '#f0f0f0' }}>
+      {showWelcome && <WelcomeModal onDismiss={handleDismissWelcome} />}
       {/* Header */}
       <div style={{ borderBottom: '1px solid #222', backgroundColor: '#141414', padding: '0 16px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
