@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Speciale Fitness — Lead Gen Dashboard
 
-## Getting Started
+Password-protected dashboard for Nicholas to view lead gen output from the `aspeciale02/Nicholas_Project` repo.
 
-First, run the development server:
+**Password:** `speciale2026`
+
+## What it shows
+
+- **Leads** — B2C prospect cards with status tracking (New / Contacted / Responded / Booked). Status stored in `localStorage`.
+- **SEO Pages** — Landing pages ready to publish to specialefitness.ca. Expandable with "Copy Content" button.
+- **Outreach** — Personalized DMs and emails grouped by handle. Copy DM / Copy Email buttons.
+- **Content Calendar** — 30-day Instagram/TikTok calendar. Filter by platform. Copy Caption / Copy Script.
+
+Data pulled live from `aspeciale02/Nicholas_Project` via the GitHub API (no token required — public repo).
+
+---
+
+## Deploy to Vercel (5 minutes)
+
+### Option A — Vercel dashboard (recommended)
+
+1. Go to [vercel.com/new](https://vercel.com/new)
+2. Click **Import Git Repository**
+3. Select `aspeciale02/speciale-fitness-dashboard`
+4. Leave all settings default — no environment variables needed
+5. Click **Deploy**
+
+Done. Vercel auto-detects Next.js and builds it. You'll get a URL like `speciale-fitness-dashboard.vercel.app`.
+
+### Option B — Vercel CLI
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install -g vercel
+cd /path/to/speciale-fitness-dashboard
+vercel --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Follow the prompts. Link to `aspeciale02` account, accept defaults.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local development
 
-## Learn More
+```bash
+npm install
+npm run dev
+# Open http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Next.js 16 (App Router)
+- Tailwind CSS v4
+- TypeScript
+- No backend — reads from GitHub API, status in localStorage
+- No environment variables required
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## How lead status works
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Each lead card has a status badge (New → Contacted → Responded → Booked). Click it to cycle. Stored in `localStorage` under `sf_status_<handle>`. This is per-browser — if Nicholas uses multiple devices, status won't sync. If sync becomes important, replace with a simple Supabase table.
